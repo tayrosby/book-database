@@ -26,7 +26,7 @@ class Connection
         $this->pw = config("database.connections.mysql.password");
         $this->db = config("database.connections.mysql.database");
         // A new PDO is opened using information from the config file.
-        $conn = new PDO("mysql:host=$this->sn;dbname=$this->db", $this->un, $this->pw);
+        $conn = new PDO("mysql:host=$this->sn;port=3306;dbname=$this->db", $this->un, $this->pw);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // The connection is returned.
         return $conn;
