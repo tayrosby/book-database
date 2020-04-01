@@ -5,19 +5,30 @@ namespace App\Services\Utility;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\LogglyHandler;
 
 class MyLogger implements ILogger
 {
     private static $logger = null;
     
+//     static function getLogger()
+//     {
+//         if(self::$logger == null){
+//             self::$logger = new Logger('LaravelTest');
+//             $stream = new StreamHandler('storage/logs/LaravelTest.log', Logger::DEBUG);
+//             $stream->setFormatter(new LineFormatter("%datetime% : %level_name% : %message% %context%\n", "g:iA n/j/Y"));
+            
+//             self::$logger->pushHandler($stream);
+//         }
+//         return self::$logger;
+//     }
+
     static function getLogger()
     {
-        if(self::$logger == null){
-            self::$logger = new Logger('LaravelTest');
-            $stream = new StreamHandler('storage/logs/LaravelTest.log', Logger::DEBUG);
-            $stream->setFormatter(new LineFormatter("%datetime% : %level_name% : %message% %context%\n", "g:iA n/j/Y"));
-            
-            self::$logger->pushHandler($stream);
+        if (self::$logger == null)
+        {
+            self::$logger = new Logger('BookDatabase');
+            self::$logger->pushHandler(new LogglyHandler('b10b875e-e334-4db1-85f4-abe03d796821/tag/cst323_logfile_heroku_upload_php', Logger::DEBUG));
         }
         return self::$logger;
     }
