@@ -4,7 +4,8 @@ namespace App\Services\Data;
 use PDOException;
 use App\Model\BookModel;
 use \PDO;
-//use App\Services\Utility\DatabaseException;
+use App\Services\Utility\DatabaseException;
+use App\Services\Utility\MyLogger;
 
 class OwnedBookDataService
 {
@@ -29,6 +30,7 @@ class OwnedBookDataService
     {
         try
         {
+            MyLogger::info("Entering OwnedBookDataService.addBookToList");
             // Taking user info from user
             $bookName = $book->bookName;
             $author = $book->author;
@@ -45,10 +47,12 @@ class OwnedBookDataService
             $stmt = null;
             // Return the number of rows that were affected
             return $count;
+            MyLogger::info("Exit OwnedBookDataService.addBookToList");
         }
         catch(PDOException $e)
         {
-            // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception OwnedBookDataService.addBookToList: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
     
@@ -62,6 +66,7 @@ class OwnedBookDataService
         
         try
         {
+            MyLogger::info("Entering OwnedBookDataService.editList");
             //takes information from the user
             $id = $book->id;
             $bookName = $book->bookName;
@@ -82,10 +87,12 @@ class OwnedBookDataService
             
             //returns the row count
             return $count;
+            MyLogger::info("Exit OwnedBookDataService.editList");
         }
         catch(PDOException $e)
         {
-            // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception OwnedBookDataService.editList: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
     
@@ -98,6 +105,7 @@ class OwnedBookDataService
     {
         try
         {
+            MyLogger::info("Entering OwnedBookDataService.removeBookFromList");
             //prepares a sql statement
             $stmt = $this->conn->prepare("DELETE FROM `OWNED` WHERE `OWNED`.`ID` = :id");
             $stmt->bindParam(':id', $id);
@@ -112,10 +120,12 @@ class OwnedBookDataService
             //returns the row count
             
             return $count;
+            MyLogger::info("Exit OwnedBookDataService.removeBookFromList");
         }
         catch(PDOException $e)
         {
-            // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception OwnedBookDataService.removeBookFromList: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
     
@@ -127,6 +137,7 @@ class OwnedBookDataService
     {
         try
         {
+            MyLogger::info("Entering OwnedBookDataService.findAllBooks");
             //prepares a sql statement
             $stmt = $this->conn->prepare("SELECT * FROM `OWNED`");
             $stmt->execute();
@@ -145,11 +156,13 @@ class OwnedBookDataService
             
             //returns the education
             return $books;
+            MyLogger::info("Exit OwnedBookDataService.findAllBooks");
             
         }
         catch(PDOException $e)
         {
-            // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception OwnedBookDataService.findAllBooks: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
 }
