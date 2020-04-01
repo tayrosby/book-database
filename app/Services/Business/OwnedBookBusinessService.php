@@ -5,6 +5,7 @@ namespace App\Services\Business;
 use App\Services\Data\OwnedBookDataService;
 use App\Services\Utility\Connection;
 use App\Model\BookModel;
+use App\Services\Utility\MyLogger;
 
 class OwnedBookBusinessService 
 {
@@ -15,6 +16,7 @@ class OwnedBookBusinessService
      */
     public function addBook($book)
     {
+        MyLogger::info("Entering OwnedBookBusinessService.addBook");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -32,6 +34,7 @@ class OwnedBookBusinessService
         if ($success == 1) { return true; }
         //else return false
         else { return false; }
+        MyLogger::info("Exiting OwnedBookBusinessService.addBook");
     }
     
     /**
@@ -41,6 +44,7 @@ class OwnedBookBusinessService
      */
     public function deleteBook($id)
     {
+        MyLogger::info("Entering OwnedBookBusinessService.deleteBook");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -59,6 +63,7 @@ class OwnedBookBusinessService
         
         //else return false
         else { return false; }
+        MyLogger::info("Exiting OwnedBookBusinessService.deleteBook");
     }
     
     /**
@@ -68,6 +73,7 @@ class OwnedBookBusinessService
      */
     public function updateList($book)
     {
+        MyLogger::info("Entering OwnedBookBusinessService.updateList");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -86,6 +92,7 @@ class OwnedBookBusinessService
         
         //else return false
         else { return false; }
+        MyLogger::info("Exiting OwnedBookBusinessService.updateList");
     }
     
     /**
@@ -94,6 +101,7 @@ class OwnedBookBusinessService
      */
     public function findAllBooks()
     {
+        MyLogger::info("Entering OwnedBookBusinessService.findAllBooks");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -112,5 +120,7 @@ class OwnedBookBusinessService
         
         //return the array
         return $books;
+        
+        MyLogger::info("Exiting OwnedBookBusinessService.findAllBooks");
     }
 }
