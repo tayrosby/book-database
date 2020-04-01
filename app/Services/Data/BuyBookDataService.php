@@ -4,6 +4,8 @@ namespace App\Services\Data;
 use PDOException;
 use App\Model\BookModel;
 use \PDO;
+use App\Services\Utility\DatabaseException;
+use App\Services\Utility\MyLogger;
 
 class BuyBookDataService 
 {
@@ -28,6 +30,8 @@ class BuyBookDataService
     {   
         try
         {
+            MyLogger::info("Entering BuyBookDataService.addBookToList");
+            
             // Taking user info from user
             $bookName = $book->bookName;
             $author = $book->author;
@@ -44,10 +48,12 @@ class BuyBookDataService
             $stmt = null;
             // Return the number of rows that were affected
             return $count;
+            MyLogger::info("Exit BuyBookDataService.addBookToList");
         }
         catch(PDOException $e)
         {
-           // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception BuyBookDataService.addBookToList: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
     
@@ -61,6 +67,8 @@ class BuyBookDataService
         
         try
         {
+            MyLogger::info("Entering BuyBookDataService.editList");
+            
             //takes information from the user
             $id = $book->id;
             $bookName = $book->bookName;
@@ -81,10 +89,12 @@ class BuyBookDataService
             
             //returns the row count
             return $count;
+            MyLogger::info("Exit BuyBookDataService.editList");
         }
         catch(PDOException $e)
         {
-           // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception BuyBookDataService.editList: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
     
@@ -97,6 +107,8 @@ class BuyBookDataService
     {     
         try
         {
+            MyLogger::info("Entering BuyBookDataService.removeBookFromList");
+            
             //prepares a sql statement
             $stmt = $this->conn->prepare("DELETE FROM `NEED_TO_BUY` WHERE `NEED_TO_BUY`.`ID` = :id");
             $stmt->bindParam(':id', $id);
@@ -111,10 +123,13 @@ class BuyBookDataService
             //returns the row count
 
             return $count;
+            
+            MyLogger::info("Exit BuyBookDataService.removeBookFromList");
         }
         catch(PDOException $e)
         {
-           // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception BuyBookDataService.removeBookFromList: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
     
@@ -126,6 +141,8 @@ class BuyBookDataService
     {     
         try
         {
+            MyLogger::info("Entering BuyBookDataService.findAllBooks");
+            
             //prepares a sql statement
             $stmt = $this->conn->prepare("SELECT * FROM `NEED_TO_BUY`");
             $stmt->execute();
@@ -145,10 +162,13 @@ class BuyBookDataService
             //returns the education
             return $books;
             
+            MyLogger::info("Exit BuyBookDataService.findAllBooks");
+            
         }
         catch(PDOException $e)
         {
-           // throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+            MyLogger::error("Exception BuyBookDataService.findAllBooks: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
 }
