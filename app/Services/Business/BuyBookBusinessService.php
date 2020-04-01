@@ -5,6 +5,7 @@ namespace App\Services\Business;
 use App\Services\Data\BuyBookDataService;
 use App\Services\Utility\Connection;
 use App\Model\BookModel;
+use App\Services\Utility\MyLogger;
 
 class BuyBookBusinessService
 {
@@ -15,6 +16,7 @@ class BuyBookBusinessService
      */
     public function addBook($book)
     {
+        MyLogger::info("Entering BuyBookBusinessService.addBook");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -32,6 +34,8 @@ class BuyBookBusinessService
         if ($success == 1) { return true; }
         //else return false
         else { return false; }
+        
+        MyLogger::info("Exiting BuyBookBusinessService.addBook");
     }
     
     /**
@@ -41,6 +45,7 @@ class BuyBookBusinessService
      */
     public function deleteBook($id)
     {
+        MyLogger::info("Entering BuyBookBusinessService.deleteBook");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -59,6 +64,8 @@ class BuyBookBusinessService
         
         //else return false
         else { return false; }
+        
+        MyLogger::info("Exiting BuyBookBusinessService.deleteBook");
     }
     
     /**
@@ -68,6 +75,7 @@ class BuyBookBusinessService
      */
     public function updateList($book)
     {
+        MyLogger::info("Entering BuyBookBusinessService.updateList");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -86,6 +94,8 @@ class BuyBookBusinessService
         
         //else return false
         else { return false; }
+        
+        MyLogger::info("Exiting BuyBookBusinessService.updateList");
     }
     
     /**
@@ -94,6 +104,7 @@ class BuyBookBusinessService
      */
     public function findAllBooks()
     {
+        MyLogger::info("Entering BuyBookBusinessService.findAllBooks");
         //creates a connection
         $db = new Connection();
         $conn = $db->open();
@@ -112,5 +123,7 @@ class BuyBookBusinessService
         
         //return the array
         return $books;
+        
+        MyLogger::info("Exiting BuyBookBusinessService.findAllBooks");
     }
 }
