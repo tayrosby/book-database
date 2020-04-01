@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\BookModel;
 use App\Services\Business\BuyBookBusinessService;
 use Exception;
+use App\Services\Utility\MyLogger;
 
 class BuyBookController extends Controller
 {
@@ -18,6 +19,7 @@ class BuyBookController extends Controller
     public function addBook(Request $request)
     {
         try {
+            MyLogger::info("Entering BuyBookController::addBook");
             //takes information from the user
             $author = $request->input('author');
             $bookName = $request->input('bookName');
@@ -36,10 +38,12 @@ class BuyBookController extends Controller
             if($success)
             {
                 return view('buybook');
+                MyLogger::info("Exit BuyBookController::addBook passing");
             }
             else
             {
                 return view('buybook');
+                MyLogger::info("Exit BuyBookController::addBook failing");
             }
             
         }
@@ -47,7 +51,7 @@ class BuyBookController extends Controller
         catch (Exception $e){
             //Best practice: catch all exceptions, log the exception, and display the common error page (or use global exception handling
             //log the exception and display exception view
-           // $this->logger->error("Exception: ", array("message" => $e->getMessage()));
+            MyLogger::error("Exception BuyBookController::addBook : ", array("message" => $e->getMessage()));
             $data = ['errorMSG' => $e->getMessage()];
            return view('exception')->with($data);
         }
@@ -61,6 +65,7 @@ class BuyBookController extends Controller
     public function editBook(Request $request)
     {
         try {
+            MyLogger::info("Entering BuyBookController::editBook");
             //takes information from the user
             $author = $request->input('author');
             $bookName = $request->input('bookName');
@@ -79,17 +84,19 @@ class BuyBookController extends Controller
             if($success)
             {
                 return view("buybook");
+                MyLogger::info("Exit BuyBookController::editBook passing");
             }
             else
             {
                 return view("buybook");
+                MyLogger::info("Exit BuyBookController::editBook failing");
             }
         }
         
         catch (Exception $e){
             //Best practice: catch all exceptions, log the exception, and display the common error page (or use global exception handling
             //log the exception and display exception view
-           // $this->logger->error("Exception: ", array("message" => $e->getMessage()));
+            MyLogger::error("Exception BuyBookController::editBook : ", array("message" => $e->getMessage()));
             $data = ['errorMSG' => $e->getMessage()];
             return view('exception')->with($data);
         }
@@ -103,6 +110,7 @@ class BuyBookController extends Controller
     public function findAllBooks(Request $request)
     {
         try {
+            MyLogger::info("Entering BuyBookController::findAllBooks");
             //calls the business service
             $service = new BuyBookBusinessService();
             
@@ -113,22 +121,20 @@ class BuyBookController extends Controller
             if($success)
             {
                 return view("buybook");
+                MyLogger::info("Exit BuyBookController::findAllBooks passing");
             }
             else
             {
                 return view("buybook");
+                MyLogger::info("Exit BuyBookController::findAllBooks failing");
             }
             
-            
-            // Puts the users in an associative array
-           // $data = ['books' => $bbooks];
-            
-            //return view("buybook")->with($data);
+
         }
         catch (Exception $e){
             //Best practice: catch all exceptions, log the exception, and display the common error page (or use global exception handling
             //log the exception and display exception view
-           // $this->logger->error("Exception: ", array("message" => $e->getMessage()));
+            MyLogger::error("Exception BuyBookController::findAllBooks : ", array("message" => $e->getMessage()));
             $data = ['errorMSG' => $e->getMessage()];
             return view('exception')->with($data);
         }
@@ -142,6 +148,7 @@ class BuyBookController extends Controller
     public function deleteBook(Request $request)
     {
         try {
+            MyLogger::info("Entering BuyBookController::deleteBook");
             //takes information from the user
             $id = $request->input('id');
             
@@ -156,16 +163,18 @@ class BuyBookController extends Controller
             if($success)
             {
                 return view("buybook");
+                MyLogger::info("Exit BuyBookController::deleteBook passing");
             }
             else
             {
                 return view("buybook");
+                MyLogger::info("Exit BuyBookController::deleteBook failing");
             }
         }
         catch (Exception $e){
             //Best practice: catch all exceptions, log the exception, and display the common error page (or use global exception handling
             //log the exception and display exception view
-          //  $this->logger->error("Exception: ", array("message" => $e->getMessage()));
+            MyLogger::error("Exception BuyBookController::deleteBook : ", array("message" => $e->getMessage()));
             $data = ['errorMSG' => $e->getMessage()];
             return view('exception')->with($data);
         }
